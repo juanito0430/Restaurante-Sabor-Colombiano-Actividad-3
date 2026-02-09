@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejercicio: Sitio Web Responsivo - Restaurante</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --espresso: #2C1810;
+    --cream: #FFF8F0;
+    --terracotta: #C45B3E;
+    --sage: #8B9E7C;
+    --gold: #D4A853;
+    --charcoal: #3A3A3A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.7;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, var(--espresso) 0%, #4A2C20 100%);
+    color: var(--cream);
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(255,255,255,0.02) 20px,
+      rgba(255,255,255,0.02) 40px
+    );
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .hero .subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 30px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--espresso);
+    margin: 50px 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--terracotta);
+    display: inline-block;
+  }
+
+  .section-title:first-of-type { margin-top: 0; }
+
+  .context-box {
+    background: white;
+    border-left: 4px solid var(--sage);
+    padding: 20px 25px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .context-box p { margin-bottom: 10px; }
+  .context-box p:last-child { margin-bottom: 0; }
+
+  .task-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px 30px;
+    margin: 20px 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+    border-top: 4px solid var(--terracotta);
+  }
+
+  .task-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--espresso);
+    margin-bottom: 12px;
+  }
+
+  .task-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .task-card ul li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+    border-bottom: 1px solid #f0ece6;
+  }
+
+  .task-card ul li:last-child { border-bottom: none; }
+
+  .task-card ul li::before {
+    content: '▸';
+    color: var(--terracotta);
+    position: absolute;
+    left: 8px;
+    font-weight: bold;
+  }
+
+  code, .code-block {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+  }
+
+  code {
+    background: #f5efe8;
+    padding: 2px 7px;
+    border-radius: 4px;
+    color: var(--terracotta);
+  }
+
+  .code-block {
+    background: var(--espresso);
+    color: #e8d5c4;
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow-x: auto;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  .code-block .comment { color: #7a9e6e; }
+  .code-block .tag { color: #d4a853; }
+  .code-block .attr { color: #c45b3e; }
+  .code-block .value { color: #8bb8d0; }
+
+  .hint-box {
+    background: linear-gradient(135deg, #fdf6ee, #fef9f3);
+    border: 1px dashed var(--gold);
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 15px 0;
+    position: relative;
+  }
+
+  .hint-box::before {
+    content: '💡';
+    position: absolute;
+    top: -12px;
+    left: 15px;
+    background: var(--cream);
+    padding: 0 5px;
+    font-size: 1.2rem;
+  }
+
+  .hint-box p { font-size: 0.95rem; }
+
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .criteria-item {
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 3px solid var(--sage);
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+
+  .criteria-item strong {
+    color: var(--espresso);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .criteria-item span {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .reference-note {
+    background: #f0f4ed;
+    padding: 18px 22px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 0.95rem;
+  }
+
+  .reference-note strong { color: var(--sage); }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 40px 0;
+  }
+
+  .footer-bar {
+    background: var(--espresso);
+    color: var(--cream);
+    text-align: center;
+    padding: 25px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 700px) {
+    .hero h1 { font-size: 2rem; }
+    .hero { padding: 40px 20px; }
+    .container { padding: 25px 18px; }
+    .criteria-grid { grid-template-columns: 1fr; }
+    .code-block { font-size: 0.8rem; padding: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Ejercicio Práctico</h1>
+  <div class="subtitle">Sitio Web Responsivo — Restaurante</div>
+</div>
+
+<div class="container">
+
+  <!-- ==================== CONTEXTO ==================== -->
+  <h2 class="section-title">📋 Contexto</h2>
+
+  <div class="context-box">
+    <p>Has sido contratado para crear el sitio web de <strong>"Sabor Colombiano"</strong>, un restaurante de comida típica colombiana. El sitio debe ser <strong>completamente responsivo</strong>, adaptándose a dispositivos móviles, tablets y escritorio.</p>
+    <p>Utiliza como referencia la estructura y técnicas del sitio <em>"La vida de Gabo"</em> (archivos <code>index.html</code> y <code>responsive.css</code> proporcionados), aplicando el mismo sistema de grid de 12 columnas y media queries.</p>
+  </div>
+
+  <!-- ==================== ESTRUCTURA ==================== -->
+  <div class="divider"></div>
+  <h2 class="section-title">🏗️ Estructura del Sitio</h2>
+
+  <p>El sitio web del restaurante debe contener las siguientes secciones:</p>
+
+  <div class="task-card">
+    <h3>1. Header (Encabezado)</h3>
+    <ul>
+      <li>Nombre del restaurante: <strong>"Sabor Colombiano"</strong></li>
+      <li>Subtítulo: <em>"Cocina tradicional desde 1998"</em></li>
+      <li>Color de fondo a elección (usa una clase similar a <code>.header</code>)</li>
+    </ul>
+  </div>
+
+  <div class="task-card">
+    <h3>2. Barra de Navegación / Menú lateral (<code>col-3</code>)</h3>
+    <ul>
+      <li>Lista de enlaces con al menos 4 categorías: <strong>Inicio, Menú, Sobre Nosotros, Contacto</strong></li>
+      <li>Cada enlace debe tener estilo tipo botón (similar al menú de Gabo)</li>
+      <li>Usar la clase <code>.menu</code> con <code>&lt;ul&gt;</code> y <code>&lt;li&gt;</code></li>
+    </ul>
+  </div>
+
+  <div class="task-card">
+    <h3>3. Contenido Principal (<code>col-9</code>)</h3>
+    <ul>
+      <li>Título: <strong>"Bienvenidos a Sabor Colombiano"</strong></li>
+      <li>Párrafo descriptivo del restaurante (mínimo 3 líneas)</li>
+      <li>Una imagen representativa del restaurante o plato típico</li>
+    </ul>
+  </div>
+
+  <div class="task-card">
+    <h3>4. Sección del Menú del Día (<code>col-6</code> + <code>col-6</code>)</h3>
+    <ul>
+      <li>Dos columnas lado a lado con platos del día</li>
+      <li>Columna izquierda: <strong>Almuerzos</strong> (lista de al menos 3 platos con precios)</li>
+      <li>Columna derecha: <strong>Bebidas</strong> (lista de al menos 3 bebidas con precios)</li>
+    </ul>
+  </div>
+
+  <div class="task-card">
+    <h3>5. Sección "Sobre Nosotros" (<code>&lt;article&gt;</code>)</h3>
+    <ul>
+      <li>Breve historia del restaurante</li>
+      <li>Incluir la fecha de publicación (similar al artículo de Gabo)</li>
+    </ul>
+  </div>
+
+  <div class="task-card">
+    <h3>6. Footer (Pie de página)</h3>
+    <ul>
+      <li>Dirección del restaurante</li>
+      <li>Teléfono de contacto</li>
+      <li>Texto: <em>"© 2024 Sabor Colombiano. Todos los derechos reservados."</em></li>
+    </ul>
+  </div>
+
+  <!-- ==================== REQUERIMIENTOS CSS ==================== -->
+  <div class="divider"></div>
+  <h2 class="section-title">🎨 Requerimientos CSS (responsive.css)</h2>
+
+  <div class="task-card">
+    <h3>Debes implementar en tu archivo CSS:</h3>
+    <ul>
+      <li><code>box-sizing: border-box</code> aplicado a todos los elementos (<code>*</code>)</li>
+      <li>Sistema de columnas de <strong>12 columnas</strong> usando clases <code>.col-1</code> a <code>.col-12</code></li>
+      <li>Columnas con <code>float: left</code> y <code>padding: 15px</code></li>
+      <li>Clearfix en <code>.row::after</code> para limpiar los floats</li>
+      <li>Estilos para <code>.menu ul</code>, <code>.menu li</code> y <code>.menu li:hover</code></li>
+      <li>Estilos para <code>.header</code> y <code>footer</code></li>
+    </ul>
+  </div>
+
+  <div class="task-card">
+    <h3>Media Queries obligatorias:</h3>
+    <ul>
+      <li><strong>Móvil</strong> (<code>max-width: 900px</code>): Todas las columnas al <code>100%</code>, apiladas verticalmente</li>
+      <li><strong>Tablet</strong> (<code>min-width: 901px</code> y <code>max-width: 1200px</code>): Ajuste de columnas intermedias</li>
+      <li><strong>Desktop</strong> (<code>min-width: 1201px</code>): Grid completo de 12 columnas funcionando</li>
+    </ul>
+  </div>
+
+  <div class="hint-box">
+    <p><strong>Pista:</strong> Revisa cómo el CSS de referencia usa <code>[class^="col-"]</code> y <code>[class*=" col-"]</code> como selectores para aplicar estilos base a todas las columnas sin repetir código.</p>
+  </div>
+
+  <!-- ==================== CÓDIGO BASE ==================== -->
+  <div class="divider"></div>
+  <h2 class="section-title">📝 Código Base (Punto de partida)</h2>
+
+  <p>Usa esta estructura como punto de partida para tu <code>index.html</code>:</p>
+
+  <div class="code-block"><span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">name=</span><span class="value">"viewport"</span> <span class="attr">content=</span><span class="value">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;link</span> <span class="attr">href=</span><span class="value">"css/responsive.css"</span> <span class="attr">rel=</span><span class="value">"stylesheet"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+  <span class="comment">&lt;!-- 1. HEADER --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="value">"header"</span><span class="tag">&gt;</span>
+    <span class="comment">&lt;!-- Tu código aquí --&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+
+  <span class="comment">&lt;!-- 2. FILA PRINCIPAL: Menú lateral + Contenido --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="value">"row"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="value">"col-3 menu"</span><span class="tag">&gt;</span>
+      <span class="comment">&lt;!-- Navegación con &lt;ul&gt; y &lt;li&gt; --&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="value">"col-9"</span><span class="tag">&gt;</span>
+      <span class="comment">&lt;!-- Contenido principal + imagen --&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+
+  <span class="comment">&lt;!-- 3. MENÚ DEL DÍA: Dos columnas --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="value">"row"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="value">"col-6"</span><span class="tag">&gt;</span>
+      <span class="comment">&lt;!-- Almuerzos --&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="value">"col-6"</span><span class="tag">&gt;</span>
+      <span class="comment">&lt;!-- Bebidas --&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+
+  <span class="comment">&lt;!-- 4. SOBRE NOSOTROS --&gt;</span>
+  <span class="tag">&lt;section&gt;</span>
+    <span class="tag">&lt;article&gt;</span>
+      <span class="comment">&lt;!-- Historia del restaurante --&gt;</span>
+    <span class="tag">&lt;/article&gt;</span>
+  <span class="tag">&lt;/section&gt;</span>
+
+  <span class="comment">&lt;!-- 5. FOOTER --&gt;</span>
+  <span class="tag">&lt;footer&gt;</span>
+    <span class="comment">&lt;!-- Información de contacto --&gt;</span>
+  <span class="tag">&lt;/footer&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+
+  <!-- ==================== ERRORES COMUNES ==================== -->
+  <div class="divider"></div>
+  <h2 class="section-title">⚠️ Errores a Evitar</h2>
+
+  <div class="reference-note">
+    <p>En el código de referencia de Gabo hay algunos errores intencionales. <strong>No los repitas en tu ejercicio:</strong></p>
+  </div>
+
+  <div class="task-card">
+    <h3>Errores encontrados en el código de referencia:</h3>
+    <ul>
+      <li><code>&lt;div clas="col-5"&gt;</code> → Le falta una <strong>"s"</strong> en <code>class</code>. Escribe siempre <code>class</code></li>
+      <li><code>&lt;div class=" col 11"&gt;</code> → Las clases no deben tener espacios internos. Correcto: <code>class="col-11"</code></li>
+      <li><code>&lt;div class="Col 10"&gt;</code> → Las clases CSS son <strong>case-sensitive</strong>. Usa siempre minúsculas: <code>col-10</code></li>
+      <li>La imagen está fuera de la fila (<code>.row</code>) donde debería estar el contenido</li>
+      <li>Falta cerrar correctamente las secciones y mantener una indentación limpia</li>
+    </ul>
+  </div>
+
+  <!-- ==================== CRITERIOS ==================== -->
+  <div class="divider"></div>
+  <h2 class="section-title">✅ Criterios de Evaluación</h2>
+
+  <div class="criteria-grid">
+    <div class="criteria-item">
+      <strong>Estructura HTML (25%)</strong>
+      <span>Uso correcto de etiquetas semánticas, clases de columnas, y organización del código.</span>
+    </div>
+    <div class="criteria-item">
+      <strong>Sistema de Grid (25%)</strong>
+      <span>Implementación correcta de las 12 columnas con float y clearfix.</span>
+    </div>
+    <div class="criteria-item">
+      <strong>Media Queries (25%)</strong>
+      <span>Tres breakpoints funcionales: móvil, tablet y desktop.</span>
+    </div>
+    <div class="criteria-item">
+      <strong>Diseño Visual (25%)</strong>
+      <span>Estética coherente, colores apropiados, tipografía legible y hover effects.</span>
+    </div>
+  </div>
+
+  <!-- ==================== ENTREGA ==================== -->
+  <div class="divider"></div>
+  <h2 class="section-title">📦 Entrega</h2>
+
+  <div class="task-card">
+    <h3>Archivos a entregar:</h3>
+    <ul>
+      <li><code>index.html</code> — Página principal del restaurante</li>
+      <li><code>css/responsive.css</code> — Hoja de estilos con el sistema responsivo</li>
+      <li>Carpeta <code>img/</code> — Con al menos una imagen del restaurante o plato</li>
+    </ul>
+  </div>
+
+  <div class="hint-box">
+    <p><strong>Consejo final:</strong> Prueba tu sitio redimensionando la ventana del navegador o usando las herramientas de desarrollador (F12 → Toggle Device Toolbar) para verificar que las media queries funcionan correctamente en los tres breakpoints.</p>
+  </div>
+
+</div>
+
+<div class="footer-bar">
+  Ejercicio de Diseño Web Responsivo — 2024
+</div>
+
+</body>
+</html>
